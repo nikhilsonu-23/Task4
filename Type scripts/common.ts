@@ -5,7 +5,7 @@ document.getElementById("minimize")?.addEventListener("click",()=>{
         document.querySelectorAll(".nav-items span").forEach((span)=>{
             span.classList.remove("hide-nav-items");
         })
-        document.querySelectorAll(".navHeadings").forEach(element => {
+        document.querySelectorAll(".nav-side-headings").forEach(element => {
             element.classList.remove("nav-headings-hidden");
         })
         document.querySelectorAll(".caret").forEach(caret => {
@@ -23,7 +23,7 @@ document.getElementById("minimize")?.addEventListener("click",()=>{
         document.querySelectorAll(".nav-items span").forEach((span)=>{
             span.classList.add("hide-nav-items");
         })
-        document.querySelectorAll(".navHeadings").forEach(element => {
+        document.querySelectorAll(".nav-side-headings").forEach(element => {
             element.classList.add("nav-headings-hidden");
         })
         document.querySelectorAll(".caret").forEach(caret => {
@@ -37,37 +37,3 @@ document.getElementById("minimize")?.addEventListener("click",()=>{
     }
     isSideNavMinimized = !isSideNavMinimized;
 })
-
-function delFromLocalStorage(name: string,value: string): void{
-    let dataSet = new Set<string>(JSON.parse(localStorage.getItem(name) || "[]"));
-    dataSet.delete(value);
-    let dataArr = Array.from(dataSet);
-    localStorage.setItem(name,JSON.stringify(dataArr));
-}
-
-// type employeeDataObjectType =  {[index: string]: string};
-function getEmployeeData():employeeDataObjectType[]{
-    let employeeDetails = JSON.parse(localStorage.getItem("employeeData") || "{}");
-    if (employeeDetails && employeeDetails.length > 0) {
-        return employeeDetails;
-    }
-    return [];
-}
-
-type employeeDataObjectType =  {
-    user: string;
-    firstName: string;
-    lastName: string;
-    location: string;
-    department: string;
-    status: string;
-    role: string;
-    empNo: string;
-    joiningDate: string;
-    imageSrc: string;
-    assignManager: string;
-    assignProject: string;
-    email: string;
-    phoneNumber: string;
-    dob: string;
-}

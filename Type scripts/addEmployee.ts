@@ -1,13 +1,13 @@
-
+import { employeeDataObjectType,getEmployeeData,delFromLocalStorage } from "./exports";
 let mode: number,prevEmail: string = "",prevEmpno: string = "",errors: Set<string>= new Set();
 let form = document.querySelector("#employeeForm") as HTMLFormElement;
 
 function loadAddEmployee(){
-    checkMode();
-    addEmployeeMode();
+    checkMode();//view employee details or edit employee details or add employee
+    setAddEmployeeMode();
     handleImageInput();
-    addEmployeeFormSubmit();
     setManagerNames();
+    addEmployeeFormSubmit();
     document.getElementById("phoneNumber")?.addEventListener("keypress",(e)=>{
         let code: number = e.key.charCodeAt(0);
         if(!((code>=48 && code<=57) || code==32 || code==45 || code==43 || code==69))
@@ -53,13 +53,14 @@ function checkMode(){
     }
 }
 
-function setInnerText(element: HTMLElement | null,text: string){
-    if(element){
+function setInnerText(query: string,text: string){
+    let element = document.querySelector(query); 
+    if(element instanceof HTMLElement){
         element.innerText = text;
     }
 }
 
-function addEmployeeMode(){
+function setAddEmployeeMode(){
     if(mode==0){
         document.getElementById("editProfile")?.classList.add("ds-none");
         document.getElementById("employeeForm")?.classList.remove("flex");
@@ -68,9 +69,9 @@ function addEmployeeMode(){
         imageInput?.classList.add("gap-2r");
     }
     else if(mode==1){
-        setInnerText(document.querySelector(".message"),"Employee details Updated Sucessfully");
-        setInnerText(document.querySelector(".formHeading"),"EDIT EMPLOYEE");
-        setInnerText(document.querySelector("button[type='submit']"),"Update Employee");
+        setInnerText(".message","Employee details Updated Sucessfully");
+        setInnerText("#formHeading","EDIT EMPLOYEE");
+        setInnerText("button[type='submit']","Update Employee");
         document.getElementById("addProfile")?.classList.add("ds-none");
         let userDetails = localStorage.getItem("editData");
         if(userDetails)
@@ -78,7 +79,7 @@ function addEmployeeMode(){
         localStorage.removeItem("editData");
     }
     else{
-        setInnerText(document.querySelector(".formHeading"),"VIEW EMPLOYEE DETAILS");
+        setInnerText("#formHeading","VIEW EMPLOYEE DETAILS");
         document.getElementById("uploadProfile")?.classList.add("ds-none");
         document.getElementById("formBtns")?.classList.add("ds-none");
         let userDetails = localStorage.getItem("viewDetails");
@@ -411,38 +412,3 @@ function addDataToLocalStorage(value: string,name: string){
     let dataArr = Array.from(dataSet)
     localStorage.setItem(name,JSON.stringify(dataArr));
 }
-
-
-// function delFromLocalStorage(name: string,value: string): void{
-//     let dataSet = new Set<string>(JSON.parse(localStorage.getItem(name) || "[]"));
-//     dataSet.delete(value);
-//     let dataArr = Array.from(dataSet);
-//     localStorage.setItem(name,JSON.stringify(dataArr));
-// }
-
-// // type employeeDataObjectType =  {[index: string]: string};
-// function getEmployeeData():employeeDataObjectType[]{
-//     let employeeDetails = JSON.parse(localStorage.getItem("employeeData") || "{}");
-//     if (employeeDetails && employeeDetails.length > 0) {
-//         return employeeDetails;
-//     }
-//     return [];
-// }
-
-// type employeeDataObjectType =  {
-//     user: string;
-//     firstName: string;
-//     lastName: string;
-//     location: string;
-//     department: string;
-//     status: string;
-//     role: string;
-//     empNo: string;
-//     joiningDate: string;
-//     imageSrc: string;
-//     assignManager: string;
-//     assignProject: string;
-//     email: string;
-//     phoneNumber: string;
-//     dob: string;
-// }

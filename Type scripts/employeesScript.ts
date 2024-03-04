@@ -1,4 +1,4 @@
-
+import { employeeDataObjectType,getEmployeeData,delFromLocalStorage } from "./exports";
 let countOfSelectedCheckboxes = 0,sortedColumnName = "";
 let tableRowsCount: number, employeesTableData: employeeDataObjectType[], lettersToDisplay:string[] = [], filteredTableData: employeeDataObjectType[];
 type filterObj = {status: Set<string>,location: Set<string>,department: Set<string>} ;
@@ -136,7 +136,7 @@ function addlistenerForFiltersAndTable() {
     
     //Listener for filter icon
     document.getElementById("filterIcon")?.addEventListener("click",(event)=>{
-        if(event.target instanceof HTMLElement && event.target.classList.contains("stroke-red")){
+        if(event.target instanceof Element && event.target.classList.contains("stroke-red")){
             document.querySelectorAll(".letter.red-letter").forEach(e => {
                 e.classList.replace("red-letter","gray-letter");
             })
@@ -192,6 +192,8 @@ function filterEmployeesOnOptions(){
 
 
 function filterTableRows(displayFilteredData: boolean) {
+    //Setting the previous sorted column as none
+    sortedColumnName = "";
     //From filters
     filteredTableData = employeesTableData;
     if(isFilterActive)
@@ -204,7 +206,7 @@ function filterTableRows(displayFilteredData: boolean) {
         }
         filteredTableData = x;
     }
-    if(!displayFilteredData)
+    if(displayFilteredData)
         displayTableRows(filteredTableData);
 }
     // let newEmployeeData = {user,fName,lName,location,department,status,role,empNo,joinDt,imageSrc,assignManager,assignProject,email,mobileNumber,dob};
@@ -461,12 +463,12 @@ function populateOrHideEllipisis(event: MouseEvent){
 
 function handleEmptyTableMsg(){
     if(tableRowsCount == 0){
-        document.querySelector(".noDataMsg")?.classList.remove("ds-none");
+        document.querySelector("#noDataMsg")?.classList.remove("ds-none");
         document.querySelector("#userDetails")?.classList.remove("flex-1");
     }
     else{
         document.querySelector("#userDetails")?.classList.add("flex-1");
-        document.querySelector(".noDataMsg")?.classList.add("ds-none");
+        document.querySelector("#noDataMsg")?.classList.add("ds-none");
     }
 }
 
@@ -552,37 +554,3 @@ function toAddEmployee() {
     // Redirecting to input page
     window.location.href = "addEmployee";
 }
-
-
-// function delFromLocalStorage(name: string,value: string): void{
-//     let dataSet = new Set<string>(JSON.parse(localStorage.getItem(name) || "[]"));
-//     dataSet.delete(value);
-//     let dataArr = Array.from(dataSet);
-//     localStorage.setItem(name,JSON.stringify(dataArr));
-// }
-
-// function getEmployeeData():employeeDataObjectType[]{
-//     let employeeDetails = JSON.parse(localStorage.getItem("employeeData") || "{}");
-//     if (employeeDetails && employeeDetails.length > 0) {
-//         return employeeDetails;
-//     }
-//     return [];
-// }
-
-// interface employeeDataObjectType {
-//     user: string;
-//     firstName: string;
-//     lastName: string;
-//     location: string;
-//     department: string;
-//     status: string;
-//     role: string;
-//     empNo: string;
-//     joiningDate: string;
-//     imageSrc: string;
-//     assignManager: string;
-//     assignProject: string;
-//     email: string;
-//     phoneNumber: string;
-//     dob: string;
-// }

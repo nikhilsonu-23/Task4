@@ -3,11 +3,11 @@ var mode, prevEmail = "", prevEmpno = "", errors = new Set();
 var form = document.querySelector("#employeeForm");
 function loadAddEmployee() {
     var _a;
-    checkMode();
-    addEmployeeMode();
+    checkMode(); //view employee details or edit employee details or add employee
+    setAddEmployeeMode();
     handleImageInput();
-    addEmployeeFormSubmit();
     setManagerNames();
+    addEmployeeFormSubmit();
     (_a = document.getElementById("phoneNumber")) === null || _a === void 0 ? void 0 : _a.addEventListener("keypress", function (e) {
         var code = e.key.charCodeAt(0);
         if (!((code >= 48 && code <= 57) || code == 32 || code == 45 || code == 43 || code == 69))
@@ -49,12 +49,13 @@ function checkMode() {
         mode = 2;
     }
 }
-function setInnerText(element, text) {
-    if (element) {
+function setInnerText(query, text) {
+    var element = document.querySelector(query);
+    if (element instanceof HTMLElement) {
         element.innerText = text;
     }
 }
-function addEmployeeMode() {
+function setAddEmployeeMode() {
     var _a, _b, _c, _d, _e;
     if (mode == 0) {
         (_a = document.getElementById("editProfile")) === null || _a === void 0 ? void 0 : _a.classList.add("ds-none");
@@ -64,9 +65,9 @@ function addEmployeeMode() {
         imageInput === null || imageInput === void 0 ? void 0 : imageInput.classList.add("gap-2r");
     }
     else if (mode == 1) {
-        setInnerText(document.querySelector(".message"), "Employee details Updated Sucessfully");
-        setInnerText(document.querySelector(".formHeading"), "EDIT EMPLOYEE");
-        setInnerText(document.querySelector("button[type='submit']"), "Update Employee");
+        setInnerText(".message", "Employee details Updated Sucessfully");
+        setInnerText("#formHeading", "EDIT EMPLOYEE");
+        setInnerText("button[type='submit']", "Update Employee");
         (_c = document.getElementById("addProfile")) === null || _c === void 0 ? void 0 : _c.classList.add("ds-none");
         var userDetails = localStorage.getItem("editData");
         if (userDetails)
@@ -74,7 +75,7 @@ function addEmployeeMode() {
         localStorage.removeItem("editData");
     }
     else {
-        setInnerText(document.querySelector(".formHeading"), "VIEW EMPLOYEE DETAILS");
+        setInnerText("#formHeading", "VIEW EMPLOYEE DETAILS");
         (_d = document.getElementById("uploadProfile")) === null || _d === void 0 ? void 0 : _d.classList.add("ds-none");
         (_e = document.getElementById("formBtns")) === null || _e === void 0 ? void 0 : _e.classList.add("ds-none");
         var userDetails = localStorage.getItem("viewDetails");

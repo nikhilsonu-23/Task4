@@ -7,7 +7,7 @@ var isSideNavMinimized = false;
         document.querySelectorAll(".nav-items span").forEach(function (span) {
             span.classList.remove("hide-nav-items");
         });
-        document.querySelectorAll(".navHeadings").forEach(function (element) {
+        document.querySelectorAll(".nav-side-headings").forEach(function (element) {
             element.classList.remove("nav-headings-hidden");
         });
         document.querySelectorAll(".caret").forEach(function (caret) {
@@ -24,7 +24,7 @@ var isSideNavMinimized = false;
         document.querySelectorAll(".nav-items span").forEach(function (span) {
             span.classList.add("hide-nav-items");
         });
-        document.querySelectorAll(".navHeadings").forEach(function (element) {
+        document.querySelectorAll(".nav-side-headings").forEach(function (element) {
             element.classList.add("nav-headings-hidden");
         });
         document.querySelectorAll(".caret").forEach(function (caret) {
@@ -38,13 +38,13 @@ var isSideNavMinimized = false;
     }
     isSideNavMinimized = !isSideNavMinimized;
 });
+
 function delFromLocalStorage(name, value) {
     var dataSet = new Set(JSON.parse(localStorage.getItem(name) || "[]"));
     dataSet.delete(value);
     var dataArr = Array.from(dataSet);
     localStorage.setItem(name, JSON.stringify(dataArr));
 }
-// type employeeDataObjectType =  {[index: string]: string};
 function getEmployeeData() {
     var employeeDetails = JSON.parse(localStorage.getItem("employeeData") || "{}");
     if (employeeDetails && employeeDetails.length > 0) {

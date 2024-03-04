@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../style.css">
     <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
-    <script src="employeesScript.js" defer></script>
+    <script src="employeesScript.js"></script>
     <script src="../common.js" defer></script>
 </head>
 <body onload="loadEmployees()">
@@ -20,7 +20,7 @@
             </div>
             <div class="padd-r-1r">
 
-                <div class="marg-top-bot col-grey padd-lr-15 f-14 navHeadings">ALL</div>
+                <div class="marg-top-bot col-grey padd-lr-15 f-14 nav-side-headings">ALL</div>
                 <div class="nav-items">
                     <img src="/images/Horizontal nav/Dashboard.svg" alt="lock">
                     <span>Dashboard</span>
@@ -30,7 +30,7 @@
                     <span>Employees</span>
                 </a>
 
-                <div class="marg-top-bot col-grey padd-lr-15 f-14 navHeadings">ROLE/USER MANAGEMENT</div>
+                <div class="marg-top-bot col-grey padd-lr-15 f-14 nav-side-headings">ROLE/USER MANAGEMENT</div>
                 <a class="nav-items justify-sb" href="/Roles/">
                     <div class="flex gap-1r">
                         <img src="/images/Horizontal nav/Roles-black.svg" alt="lock">
@@ -169,7 +169,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="noDataMsg light-red-theme b-rad-5 ds-none">No Data Available</div>
+            <div id="noDataMsg" class="light-red-theme b-rad-5 ds-none">No Data Available</div>
         </section>
     </div>
 

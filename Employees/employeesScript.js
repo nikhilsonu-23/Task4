@@ -1,3 +1,13 @@
+"use strict";
+var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
+    if (pack || arguments.length === 2) for (var i = 0, l = from.length, ar; i < l; i++) {
+        if (ar || !(i in from)) {
+            if (!ar) ar = Array.prototype.slice.call(from, 0, i);
+            ar[i] = from[i];
+        }
+    }
+    return to.concat(ar || Array.prototype.slice.call(from));
+};
 var countOfSelectedCheckboxes = 0, sortedColumnName = "";
 var tableRowsCount, employeesTableData, lettersToDisplay = [], filteredTableData;
 var filter = { status: new Set(), location: new Set(), department: new Set() };
@@ -125,7 +135,7 @@ function addlistenerForFiltersAndTable() {
     }
     //Listener for filter icon
     (_c = document.getElementById("filterIcon")) === null || _c === void 0 ? void 0 : _c.addEventListener("click", function (event) {
-        if (event.target instanceof HTMLElement && event.target.classList.contains("stroke-red")) {
+        if (event.target instanceof Element && event.target.classList.contains("stroke-red")) {
             document.querySelectorAll(".letter.red-letter").forEach(function (e) {
                 e.classList.replace("red-letter", "gray-letter");
             });
@@ -418,12 +428,12 @@ function populateOrHideEllipisis(event) {
 function handleEmptyTableMsg() {
     var _a, _b, _c, _d;
     if (tableRowsCount == 0) {
-        (_a = document.querySelector(".noDataMsg")) === null || _a === void 0 ? void 0 : _a.classList.remove("ds-none");
+        (_a = document.querySelector("#noDataMsg")) === null || _a === void 0 ? void 0 : _a.classList.remove("ds-none");
         (_b = document.querySelector("#userDetails")) === null || _b === void 0 ? void 0 : _b.classList.remove("flex-1");
     }
     else {
         (_c = document.querySelector("#userDetails")) === null || _c === void 0 ? void 0 : _c.classList.add("flex-1");
-        (_d = document.querySelector(".noDataMsg")) === null || _d === void 0 ? void 0 : _d.classList.add("ds-none");
+        (_d = document.querySelector("#noDataMsg")) === null || _d === void 0 ? void 0 : _d.classList.add("ds-none");
     }
 }
 function handleUserCheckBoxClick(checkBox) {
@@ -435,26 +445,27 @@ function handleUserCheckBoxClick(checkBox) {
     }
 }
 function sort(columnName) {
+    var dataToSort = __spreadArray([], filteredTableData, true);
     if (columnName == "user") {
-        filteredTableData = filteredTableData.toSorted(function (a, b) { return a.user.localeCompare(b.user); });
+        dataToSort.sort(function (a, b) { return a.user.localeCompare(b.user); });
     }
     else if (columnName == "location") {
-        filteredTableData = filteredTableData.toSorted(function (a, b) { return a.location.localeCompare(b.location); });
+        dataToSort.sort(function (a, b) { return a.location.localeCompare(b.location); });
     }
     else if (columnName == "department") {
-        filteredTableData = filteredTableData.toSorted(function (a, b) { return a.department.localeCompare(b.department); });
+        dataToSort.sort(function (a, b) { return a.department.localeCompare(b.department); });
     }
     else if (columnName == "role") {
-        filteredTableData = filteredTableData.toSorted(function (a, b) { return a.role.localeCompare(b.role); });
+        dataToSort.sort(function (a, b) { return a.role.localeCompare(b.role); });
     }
     else if (columnName == "empNo") {
-        filteredTableData = filteredTableData.toSorted(function (a, b) { return a.empNo.localeCompare(b.empNo); });
+        dataToSort.sort(function (a, b) { return a.empNo.localeCompare(b.empNo); });
     }
     else if (columnName == "status") {
-        filteredTableData = filteredTableData.toSorted(function (a, b) { return a.status.localeCompare(b.status); });
+        dataToSort.sort(function (a, b) { return a.status.localeCompare(b.status); });
     }
     else if (columnName == "joinDate") {
-        filteredTableData = filteredTableData.toSorted(function (a, b) {
+        dataToSort.sort(function (a, b) {
             var dateA = new Date(a.joiningDate);
             var dateB = new Date(b.joiningDate);
             if (dateA.getTime() > dateB.getTime())
@@ -467,13 +478,13 @@ function sort(columnName) {
     }
     //If column is already sorted sorting it in desecending order
     if (sortedColumnName == columnName) {
-        filteredTableData.reverse();
+        dataToSort.reverse();
         sortedColumnName = "";
     }
     else {
         sortedColumnName = columnName;
     }
-    displayTableRows(filteredTableData);
+    displayTableRows(dataToSort);
 }
 function downloadCSV() {
     var csvData = [];
@@ -500,16 +511,3 @@ function toAddEmployee() {
     // Redirecting to input page
     window.location.href = "addEmployee";
 }
-// function delFromLocalStorage(name, value) {
-//     var dataSet = new Set(JSON.parse(localStorage.getItem(name) || "[]"));
-//     dataSet.delete(value);
-//     var dataArr = Array.from(dataSet);
-//     localStorage.setItem(name, JSON.stringify(dataArr));
-// }
-// function getEmployeeData() {
-//     var employeeDetails = JSON.parse(localStorage.getItem("employeeData") || "{}");
-//     if (employeeDetails && employeeDetails.length > 0) {
-//         return employeeDetails;
-//     }
-//     return [];
-// }
